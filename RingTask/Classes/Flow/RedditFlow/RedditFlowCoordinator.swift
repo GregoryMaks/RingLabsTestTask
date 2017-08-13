@@ -13,10 +13,12 @@ class RedditFlowCoordinator {
     
     let window: UIWindow
     
+    private let networkService: NetworkServiceProtocol
     private var listViewController: RedditPostListViewController?
     
-    init(window: UIWindow) {
+    init(window: UIWindow, networkService: NetworkServiceProtocol) {
         self.window = window
+        self.networkService = networkService
     }
     
     func start() {

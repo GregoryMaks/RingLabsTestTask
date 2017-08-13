@@ -11,6 +11,8 @@ import Foundation
 
 extension Dictionary where Key: ExpressibleByStringLiteral {
     
+    // TODO: make this more functional?
+    
     func validatedValue<T>(forKey key: Key) throws -> T {
         guard let value = self[key] else {
             throw ParsingError.missingValue(key: key as! String)
@@ -22,7 +24,9 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     func validatedOptionalValue<T>(forKey key: Key) throws -> T? {
-        guard let value = self[key] else {
+        guard let value = self[key],
+              (value is NSNull) == false else
+        {
             return nil
         }
         guard let typedValue = value as? T else {

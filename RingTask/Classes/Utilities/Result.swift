@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 func identity<Value>(_ value: Value) -> Value {
     return value
 }
