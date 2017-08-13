@@ -10,34 +10,40 @@ import Foundation
 
 class RedditService {
 
+    // MARK: - Subtypes
+    
+    private struct Constants {
+        static let apiUrl = URL(string: "https://api.reddit.com")!
+        
+        static var topPostsAbsoluteURL: URL {
+            return URL(string: "top", relativeTo: apiUrl)!
+        }
+    }
+    
     enum RedditError: Error {
         case networkError(error: NetworkError)
         case serverError(statusCode: Int)
         case parsingError(error: ParsingError)
     }
     
-    private struct Constants {
-        static let apiUrl = "api.reddit.com"
-        
-        static var topPostsAbsoluteURL: URL {
-            return URL(string: "/top", relativeTo: URL(string: apiUrl)!)!
-        }
-    }
+    // MARK: - Private properties
     
     private let networkService: NetworkServiceProtocol
     private let queue: DispatchQueue
+    
+    // MARK: - Lifecycle
     
     init(networkService: NetworkServiceProtocol, queue: DispatchQueue = DispatchQueue.main) {
         self.networkService = networkService
         self.queue = queue
     }
     
-    func requestTopPosts(completion: @escaping (Result<[RedditPostModel], RedditError>) -> Void) {
+    func requestTopPosts(completion: @escaping (Result<RedditListingResponse<RedditPostServerModel>, RedditError>) -> Void) {
         let request = URLRequest(url: Constants.topPostsAbsoluteURL)
         networkService.perform(request: request) {
             completion(
                 $0.flatMap(ifSuccess: self.verifyServerResponse, ifFailure: self.networkErrorToResult)
-                  .flatMap(ifSuccess: self.parsePostModels, ifFailure: liftError)
+                  .flatMap(ifSuccess: self.parseListingResult, ifFailure: liftError)
             )
         }
     }
@@ -53,13 +59,14 @@ class RedditService {
         }
     }
     
-    private func parsePostModels(_ data: Data?) -> Result<[RedditPostModel], RedditError> {
+    private func parseListingResult(_ data: Data?) -> Result<RedditListingResponse<RedditPostServerModel>, RedditError> {
         guard let data = data else {
-            return .success([])
+            return .success(.empty())
         }
-    
-        let builder = RedditPostModelBuilder(data: data)
-        return builder.buildModels().flatMapError(transform: { return .failure(.parsingError(error: $0)) })
+
+        return RedditListingResponseBuilder(data: data)
+            .buildResult()
+            .flatMapError { error in .failure(.parsingError(error: error)) }
     }
     
     // MARK: - Helper methods
@@ -72,3 +79,4 @@ class RedditService {
         return (200..<300).contains(statusCode)
     }
 }
+
