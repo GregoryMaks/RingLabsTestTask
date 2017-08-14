@@ -14,7 +14,7 @@ class RedditFlowCoordinator {
     let window: UIWindow
     
     private let networkService: NetworkServiceProtocol
-    private var listViewController: RedditPostListViewController?
+    private var listViewController: RedditTopListingViewController?
     
     init(window: UIWindow, networkService: NetworkServiceProtocol) {
         self.window = window
@@ -28,13 +28,27 @@ class RedditFlowCoordinator {
             return
         }
         
-        guard let viewController = navController.viewControllers.first as? RedditPostListViewController else {
+        guard let viewController = navController.viewControllers.first as? RedditTopListingViewController else {
             print("Root view controller not found")
             return
         }
         
+        let viewModel = RedditTopListingViewModel(networkService: networkService)
+        viewModel.coordinatorDelegate = self
+        viewController.bind(viewModel: viewModel)
+        
         listViewController = viewController
-        window.rootViewController = listViewController
+        window.rootViewController = navController
     }
     
 }
+
+
+// MARK: - RedditTopListingViewModelCoordinatorDelegate
+
+extension RedditFlowCoordinator: RedditTopListingViewModelCoordinatorDelegate {
+    
+    // TODO
+    
+}
+
