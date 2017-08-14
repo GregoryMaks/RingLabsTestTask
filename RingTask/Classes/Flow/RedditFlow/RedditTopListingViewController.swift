@@ -13,7 +13,7 @@ class RedditTopListingViewController: UITableViewController {
     
     // MARK: - Private properties
     
-    var viewModel: RedditTopListingViewModel!
+    fileprivate var viewModel: RedditTopListingViewModel!
     
     // MARK: - Lifecycle
     
@@ -23,6 +23,9 @@ class RedditTopListingViewController: UITableViewController {
         tableView.register(cell: RedditTopListingCell.self)
         tableView.estimatedRowHeight = 87.0
         
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        
         viewModel.dataSource.loadData()
     }
     
@@ -31,6 +34,12 @@ class RedditTopListingViewController: UITableViewController {
     func bind(viewModel: RedditTopListingViewModel) {
         self.viewModel = viewModel
         self.viewModel.dataSource.delegate = self
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func pullToRefresh(_ sender: UIRefreshControl) {
+        self.viewModel.dataSource.loadData()
     }
     
 }
@@ -86,9 +95,12 @@ extension RedditTopListingViewController: RedditTopListingDataSourceDelegate {
     
     func dataSourceDidFinishLoadingData(_ dataSource: RedditTopListingDataSource) {
         tableView.reloadData()
+        refreshControl?.endRefreshing()
     }
     
     func dataSource(_ dataSource: RedditTopListingDataSource, didFinishWithError error: RedditError) {
+        refreshControl?.endRefreshing()
+        
         let alert = UIAlertController(title: "Error",
                                       message: error.localizedDescription,
                                       preferredStyle: UIAlertControllerStyle.alert)
