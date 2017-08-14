@@ -11,29 +11,26 @@ import UIKit
 
 class RedditTopListingCell: UITableViewCell, NibLoadableView, Reusable {
     
-//    struct Model {
-//        let title: String
-//        let author: String
-//        let createdAt: Date
-//        let commentsCount: Int
-//        let thumbnailUrl: URL?
-//        
-//        init(serverModel: RedditPostServerModel) {
-//            title = serverModel.title
-//            author = serverModel.author
-//            createdAt = serverModel.createdAt
-//            commentsCount = serverModel.commentsCount
-//            thumbnailUrl = serverModel.thumbnailUrl
-//        }
-//    }
+    private struct Constants {
+        
+        static func noThumbnailImage() -> UIImage? {
+            return UIImage(named: "NoThumbnail")
+        }
+        
+    }
     
     // MARK: - Outlets
     
-    @IBOutlet weak var thumbnailImageView: UIImageView!
-    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorDateLabel: UILabel!
-    @IBOutlet weak var commentsLabel: UILabel!
+    @IBOutlet private weak var thumbnailImageView: UIImageView!
+    @IBOutlet private weak var imageActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var authorDateLabel: UILabel!
+    @IBOutlet private weak var commentsLabel: UILabel!
+    
+    // MARK: - Private properties
+    
+    private var imageLoadingDataTask: URLSessionDataTask?
+    private var failedToLoadImageOnce = false
     
     // MARK: - Public properties
     
@@ -47,26 +44,51 @@ class RedditTopListingCell: UITableViewCell, NibLoadableView, Reusable {
     
     override func prepareForReuse() {
         model = nil
+        
+        cancelImageLoading()
+        failedToLoadImageOnce = false
     }
     
     // MARK: - Public methods
     
-    func startLoadingImage() {
-        imageActivityIndicator.isHidden = false
+    func startLoadingImage(imageLoadingService: ImageLoadingServiceProtocol) {
+        guard let imageUrl = model?.thumbnailUrl, failedToLoadImageOnce == false else {
+            return
+        }
+        
         imageActivityIndicator.startAnimating()
+        
+        imageLoadingDataTask = imageLoadingService.loadImage(for: imageUrl) { [weak self] result in
+            result.analysis(ifValue:
+                { image in
+                    self?.thumbnailImageView.image = image
+                    self?.imageActivityIndicator.stopAnimating()
+                }, ifError:
+                { _ -> Void in
+                    self?.thumbnailImageView.image = Constants.noThumbnailImage()
+                    self?.failedToLoadImageOnce = true
+                }
+            )
+        }
     }
     
-    func cancelLoadingOperations() {
-        imageActivityIndicator.isHidden = true
+    func cancelImageLoading() {
+        guard let imageLoadingDataTask = imageLoadingDataTask else {
+            return
+        }
+        
         imageActivityIndicator.stopAnimating()
+        
+        imageLoadingDataTask.cancel()
+        failedToLoadImageOnce = false
     }
     
     // MARK: - Private methods
     
     private func updateContent() {
         guard let model = model else {
-            thumbnailImageView.image = UIImage(named: "NoThumbnail")
-            imageActivityIndicator.isHidden = true
+            thumbnailImageView.image = nil
+            imageActivityIndicator.stopAnimating()
             titleLabel.text = nil
             authorDateLabel.text = nil
             commentsLabel.text = nil
@@ -76,6 +98,10 @@ class RedditTopListingCell: UITableViewCell, NibLoadableView, Reusable {
         titleLabel.text = model.title
         authorDateLabel.text = AuthorDateFormatter().authorDateString(forAuthor: model.author, date: model.createdAt)
         commentsLabel.text = CommentFormatter().commentString(fromCommentCount: model.commentsCount)
+        
+        if model.thumbnailUrl == nil {
+            thumbnailImageView.image = Constants.noThumbnailImage()
+        }
     }
     
 }

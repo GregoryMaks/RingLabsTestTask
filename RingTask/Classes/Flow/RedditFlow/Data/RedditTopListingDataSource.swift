@@ -12,7 +12,7 @@ import Foundation
 protocol RedditTopListingDataSourceDelegate: class {
     
     func dataSourceDidFinishLoadingData(_ dataSource: RedditTopListingDataSource)
-    func dataSource(_ dataSource: RedditTopListingDataSource, didFinishWithError error: RedditService.RedditError)
+    func dataSource(_ dataSource: RedditTopListingDataSource, didFinishWithError error: RedditError)
     
 }
 
@@ -57,9 +57,9 @@ class RedditTopListingDataSource {
     private func loadDataChunk(loadingType: LoadingType) {
         guard !isLoading else { return }
         
-        redditService.requestTopPosts { result in
+        redditService.requestTopPosts { [weak self] result in
             result.analysis(ifValue:
-                { [weak self] response in
+                { response in
                     guard let strongSelf = self else { return }
                     
                     strongSelf.modifyModels(withNewData: response.models, append: (loadingType == .loadMore))
@@ -68,7 +68,7 @@ class RedditTopListingDataSource {
                     strongSelf.isLoading = false
                     strongSelf.delegate?.dataSourceDidFinishLoadingData(strongSelf)
                 }, ifError:
-                { [weak self] error in
+                { error in
                     guard let strongSelf = self else { return }
                     
                     strongSelf.isLoading = false

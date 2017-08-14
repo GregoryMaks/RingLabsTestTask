@@ -8,6 +8,14 @@
 
 import Foundation
 
+
+enum RedditError: Error {
+    case networkError(error: NetworkError)
+    case serverError(statusCode: Int)
+    case parsingError(error: ParsingError)
+}
+
+
 class RedditService {
 
     // MARK: - Subtypes
@@ -20,12 +28,6 @@ class RedditService {
         }
     }
     
-    enum RedditError: Error {
-        case networkError(error: NetworkError)
-        case serverError(statusCode: Int)
-        case parsingError(error: ParsingError)
-    }
-    
     // MARK: - Private properties
     
     private let networkService: NetworkServiceProtocol
@@ -33,12 +35,14 @@ class RedditService {
     
     // MARK: - Lifecycle
     
-    init(networkService: NetworkServiceProtocol, queue: DispatchQueue = DispatchQueue.main) {
+    init(networkService: NetworkServiceProtocol, queue: DispatchQueue = .main) {
         self.networkService = networkService
         self.queue = queue
     }
     
-    func requestTopPosts(completion: @escaping (Result<RedditListingResponse<RedditPostServerModel>, RedditError>) -> Void) {
+    func requestTopPosts(completion: @escaping (Result<RedditListingResponse<RedditPostServerModel>, RedditError>)
+        -> Void)
+    {
         let request = URLRequest(url: Constants.topPostsAbsoluteURL)
         networkService.perform(request: request) { [weak self] result in
             guard let strongSelf = self else { return }
@@ -54,16 +58,19 @@ class RedditService {
     
     // MARK: - Private methods
     
-    private func verifyServerResponse(_ response: (Data?, HTTPURLResponse)) -> Result<Data?, RedditError> {
-        let statusCode = response.1.statusCode
-        if isStatusCodeOk(statusCode) {
+    private func verifyServerResponse(_ response: (data: Data?, urlResponse: HTTPURLResponse))
+        -> Result<Data?, RedditError>
+    {
+        if HttpStatus(response.urlResponse).isOk {
             return .success(response.0)
         } else {
-            return .failure(.serverError(statusCode: statusCode))
+            return .failure(.serverError(statusCode: response.urlResponse.statusCode))
         }
     }
     
-    private func parseListingResult(_ data: Data?) -> Result<RedditListingResponse<RedditPostServerModel>, RedditError> {
+    private func parseListingResult(_ data: Data?)
+        -> Result<RedditListingResponse<RedditPostServerModel>, RedditError>
+    {
         guard let data = data else {
             return .success(.empty())
         }
@@ -78,9 +85,6 @@ class RedditService {
     private func networkErrorToResult(_ error: NetworkError) -> Result<Data?, RedditError> {
         return .failure(.networkError(error: error))
     }
-    
-    private func isStatusCodeOk(_ statusCode: Int) -> Bool {
-        return (200..<300).contains(statusCode)
-    }
+
 }
 
