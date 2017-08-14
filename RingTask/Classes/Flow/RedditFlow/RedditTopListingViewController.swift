@@ -21,10 +21,18 @@ class RedditTopListingViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(cell: RedditTopListingCell.self)
-        tableView.estimatedRowHeight = 87.0
+        tableView.register(headerFooterView: LoadMoreFooterView.self)
+        
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.estimatedRowHeight = 87.0 // not a magic number, used by TV to approximate
+        
+        tableView.sectionFooterHeight = UITableViewAutomaticDimension;
+        tableView.estimatedSectionFooterHeight = 45.0   // not a magic number, used by TV to approximate
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        
+        
         
         viewModel.dataSource.loadData()
     }
@@ -33,13 +41,13 @@ class RedditTopListingViewController: UITableViewController {
     
     func bind(viewModel: RedditTopListingViewModel) {
         self.viewModel = viewModel
-        self.viewModel.dataSource.delegate = self
+        viewModel.dataSource.delegate = self
     }
     
     // MARK: - Actions
     
     @objc private func pullToRefresh(_ sender: UIRefreshControl) {
-        self.viewModel.dataSource.loadData()
+        viewModel.dataSource.loadData()
     }
     
 }
@@ -61,6 +69,15 @@ extension RedditTopListingViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.dataSource.models.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // Hide header
+        return CGFloat.leastNormalMagnitude
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return tableView.dequeueReusableHeaderFooterView() as LoadMoreFooterView
     }
     
 }
@@ -86,6 +103,10 @@ extension RedditTopListingViewController {
         (cell as? RedditTopListingCell).flatMap {
             $0.cancelImageLoading()
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        viewModel.dataSource.loadMoreData()
     }
     
 }

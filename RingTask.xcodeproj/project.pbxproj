@@ -16,6 +16,8 @@
 		9327D3BF1F4052DB00DEADC6 /* RawDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9327D3BE1F4052DB00DEADC6 /* RawDataInitializable.swift */; };
 		93CF2EAD1F41F95300E90876 /* ImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF2EAC1F41F95300E90876 /* ImageLoadingService.swift */; };
 		93CF2EAF1F41FCE200E90876 /* HttpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF2EAE1F41FCE200E90876 /* HttpStatus.swift */; };
+		93CF2EB21F423DF300E90876 /* LoadMoreFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93CF2EB11F423DF300E90876 /* LoadMoreFooterView.xib */; };
+		93CF2EB41F423EFC00E90876 /* LoadMoreFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF2EB31F423EFC00E90876 /* LoadMoreFooterView.swift */; };
 		93E962611F40BD23002018C6 /* RedditTopListingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E962601F40BD23002018C6 /* RedditTopListingDataSource.swift */; };
 		93E962631F40BD51002018C6 /* RedditTopListingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E962621F40BD51002018C6 /* RedditTopListingCell.swift */; };
 		93E962651F40BF1E002018C6 /* RedditTopListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E962641F40BF1E002018C6 /* RedditTopListingViewModel.swift */; };
@@ -47,6 +49,8 @@
 		9327D3BE1F4052DB00DEADC6 /* RawDataInitializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawDataInitializable.swift; sourceTree = "<group>"; };
 		93CF2EAC1F41F95300E90876 /* ImageLoadingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageLoadingService.swift; path = RingTask/Classes/Networking/ImageLoadingService.swift; sourceTree = SOURCE_ROOT; };
 		93CF2EAE1F41FCE200E90876 /* HttpStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpStatus.swift; sourceTree = "<group>"; };
+		93CF2EB11F423DF300E90876 /* LoadMoreFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreFooterView.xib; sourceTree = "<group>"; };
+		93CF2EB31F423EFC00E90876 /* LoadMoreFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMoreFooterView.swift; sourceTree = "<group>"; };
 		93E962601F40BD23002018C6 /* RedditTopListingDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditTopListingDataSource.swift; sourceTree = "<group>"; };
 		93E962621F40BD51002018C6 /* RedditTopListingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditTopListingCell.swift; sourceTree = "<group>"; };
 		93E962641F40BF1E002018C6 /* RedditTopListingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditTopListingViewModel.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 			children = (
 				93E962621F40BD51002018C6 /* RedditTopListingCell.swift */,
 				93E962661F40D5F7002018C6 /* RedditTopListingCell.xib */,
+				93CF2EB31F423EFC00E90876 /* LoadMoreFooterView.swift */,
+				93CF2EB11F423DF300E90876 /* LoadMoreFooterView.xib */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -288,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9327D3B21F3F704700DEADC6 /* LaunchScreen.storyboard in Resources */,
+				93CF2EB21F423DF300E90876 /* LoadMoreFooterView.xib in Resources */,
 				E6D40ACF1F360EDA00371C82 /* Assets.xcassets in Resources */,
 				93E962671F40D5F7002018C6 /* RedditTopListingCell.xib in Resources */,
 				E6D40ACD1F360EDA00371C82 /* Main.storyboard in Resources */,
@@ -304,6 +311,7 @@
 				E61A51DF1F365EE000248D82 /* Result.swift in Sources */,
 				9327D3B71F3F8AA000DEADC6 /* RedditService.swift in Sources */,
 				E682D4651F387D7400767C0C /* RedditTopListingViewController.swift in Sources */,
+				93CF2EB41F423EFC00E90876 /* LoadMoreFooterView.swift in Sources */,
 				E682D45D1F38640C00767C0C /* Dictionary+ServerModelValidation.swift in Sources */,
 				93E962631F40BD51002018C6 /* RedditTopListingCell.swift in Sources */,
 				E682D4631F387D4300767C0C /* RedditFlowCoordinator.swift in Sources */,
