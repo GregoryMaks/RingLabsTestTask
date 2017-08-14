@@ -40,11 +40,15 @@ class RedditService {
     
     func requestTopPosts(completion: @escaping (Result<RedditListingResponse<RedditPostServerModel>, RedditError>) -> Void) {
         let request = URLRequest(url: Constants.topPostsAbsoluteURL)
-        networkService.perform(request: request) {
-            completion(
-                $0.flatMap(ifSuccess: self.verifyServerResponse, ifFailure: self.networkErrorToResult)
-                  .flatMap(ifSuccess: self.parseListingResult, ifFailure: liftError)
-            )
+        networkService.perform(request: request) { [weak self] result in
+            guard let strongSelf = self else { return }
+            strongSelf.queue.async {
+                completion(
+                    result.flatMap(ifSuccess: strongSelf.verifyServerResponse, ifFailure: strongSelf.networkErrorToResult)
+                          .flatMap(ifSuccess: strongSelf.parseListingResult, ifFailure: liftError)
+                )
+            }
+            
         }
     }
     
