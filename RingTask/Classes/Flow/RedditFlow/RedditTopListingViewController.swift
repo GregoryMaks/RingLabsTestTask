@@ -66,7 +66,7 @@ extension RedditTopListingViewController {
                             forRowAt indexPath: IndexPath)
     {
         (cell as? RedditTopListingCell).flatMap {
-            $0.startLoadingImage()
+            $0.startLoadingImage(imageLoadingService: self.viewModel.imageLoadingService)
         }
     }
     
@@ -75,7 +75,7 @@ extension RedditTopListingViewController {
                             forRowAt indexPath: IndexPath)
     {
         (cell as? RedditTopListingCell).flatMap {
-            $0.cancelLoadingOperations()
+            $0.cancelImageLoading()
         }
     }
     
@@ -88,7 +88,7 @@ extension RedditTopListingViewController: RedditTopListingDataSourceDelegate {
         tableView.reloadData()
     }
     
-    func dataSource(_ dataSource: RedditTopListingDataSource, didFinishWithError error: RedditService.RedditError) {
+    func dataSource(_ dataSource: RedditTopListingDataSource, didFinishWithError error: RedditError) {
         let alert = UIAlertController(title: "Error",
                                       message: error.localizedDescription,
                                       preferredStyle: UIAlertControllerStyle.alert)

@@ -30,20 +30,25 @@ enum NetworkError: Error {
 
 
 protocol NetworkServiceProtocol {
-    func perform(request: URLRequest, completion: @escaping (Result<(Data?, HTTPURLResponse), NetworkError>) -> Void)
+    @discardableResult func perform(request: URLRequest,
+                                    completion: @escaping (Result<(Data?, HTTPURLResponse), NetworkError>) -> Void)
+        -> URLSessionDataTask
 }
 
 
 class NetworkService: NetworkServiceProtocol {
 
-    fileprivate let session: URLSession
+    private let session: URLSession
     
     init() {
         let configuration = URLSessionConfiguration.default
         session = URLSession(configuration: configuration)
     }
     
-    func perform(request: URLRequest, completion: @escaping (Result<(Data?, HTTPURLResponse), NetworkError>) -> Void) {
+    @discardableResult func perform(request: URLRequest,
+                                    completion: @escaping (Result<(Data?, HTTPURLResponse), NetworkError>) -> Void)
+        -> URLSessionDataTask
+    {
         let dataTask = session.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
                 completion(.failure(NetworkError(urlError: error)))
@@ -53,6 +58,8 @@ class NetworkService: NetworkServiceProtocol {
             completion(.success((data, response)))
         }
         dataTask.resume()
+        
+        return dataTask
     }
     
 }

@@ -14,11 +14,13 @@ class RedditFlowCoordinator {
     let window: UIWindow
     
     private let networkService: NetworkServiceProtocol
+    private let imageLoadingService: ImageLoadingServiceProtocol
     private var listViewController: RedditTopListingViewController?
     
-    init(window: UIWindow, networkService: NetworkServiceProtocol) {
+    init(window: UIWindow, networkService: NetworkServiceProtocol, imageLoadingService: ImageLoadingServiceProtocol) {
         self.window = window
         self.networkService = networkService
+        self.imageLoadingService = imageLoadingService
     }
     
     func start() {
@@ -33,7 +35,8 @@ class RedditFlowCoordinator {
             return
         }
         
-        let viewModel = RedditTopListingViewModel(networkService: networkService)
+        let viewModel = RedditTopListingViewModel(networkService: networkService,
+                                                  imageLoadingService: imageLoadingService)
         viewModel.coordinatorDelegate = self
         viewController.bind(viewModel: viewModel)
         
