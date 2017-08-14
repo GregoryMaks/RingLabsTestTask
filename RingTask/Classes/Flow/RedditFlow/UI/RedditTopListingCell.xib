@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="84" id="Tz5-B4-bnx" customClass="RedditTopListingCell" customModule="RingTask" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="418" height="87"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tz5-B4-bnx" id="ABU-PD-zX5">
+                <rect key="frame" x="0.0" y="0.0" width="418" height="86.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoThumbnail" translatesAutoresizingMaskIntoConstraints="NO" id="ZEW-wx-RAd">
+                        <rect key="frame" x="8" y="8" width="70" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="70" id="ZFh-6d-4ih"/>
+                            <constraint firstAttribute="width" constant="70" id="pQo-yi-ZC2"/>
+                        </constraints>
+                    </imageView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="RIP-ZG-XbC">
+                        <rect key="frame" x="25" y="25" width="37" height="37"/>
+                    </activityIndicatorView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Title&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXM-pF-fRy">
+                        <rect key="frame" x="86" y="8" width="324" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;by Author N hours ago&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1YX-tj-3NW">
+                        <rect key="frame" x="86" y="31.5" width="324" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;M comments&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pyh-3u-9bv">
+                        <rect key="frame" x="322" y="63.5" width="88" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Pyh-3u-9bv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1YX-tj-3NW" secondAttribute="bottom" constant="4" id="0ID-Ui-Egh"/>
+                    <constraint firstAttribute="topMargin" secondItem="oXM-pF-fRy" secondAttribute="top" id="0tu-uD-5Te"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="oXM-pF-fRy" secondAttribute="trailing" id="40r-Br-Cj4"/>
+                    <constraint firstItem="RIP-ZG-XbC" firstAttribute="centerX" secondItem="ZEW-wx-RAd" secondAttribute="centerX" id="6af-Wj-V3F"/>
+                    <constraint firstAttribute="topMargin" secondItem="ZEW-wx-RAd" secondAttribute="top" id="7NL-YN-FKB"/>
+                    <constraint firstItem="oXM-pF-fRy" firstAttribute="leading" secondItem="ZEW-wx-RAd" secondAttribute="trailing" constant="8" id="8xF-pB-OOW"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Pyh-3u-9bv" secondAttribute="bottom" constant="0.5" id="Ehq-Eu-kyZ"/>
+                    <constraint firstItem="1YX-tj-3NW" firstAttribute="leading" secondItem="ZEW-wx-RAd" secondAttribute="trailing" constant="8" id="KHt-Re-A43"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="ZEW-wx-RAd" secondAttribute="bottom" id="Lul-1m-gTD"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="ZEW-wx-RAd" secondAttribute="leading" id="ZX9-Lu-hXq"/>
+                    <constraint firstItem="RIP-ZG-XbC" firstAttribute="centerY" secondItem="ZEW-wx-RAd" secondAttribute="centerY" id="bFv-fn-WE8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Pyh-3u-9bv" secondAttribute="trailing" id="g6o-Gw-c2v"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1YX-tj-3NW" secondAttribute="trailing" id="nJI-sA-qa3"/>
+                    <constraint firstItem="1YX-tj-3NW" firstAttribute="top" secondItem="oXM-pF-fRy" secondAttribute="bottom" constant="4" id="xpk-CK-P9j"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="authorDateLabel" destination="1YX-tj-3NW" id="CEM-9A-2Dy"/>
+                <outlet property="commentsLabel" destination="Pyh-3u-9bv" id="cGE-qT-BLo"/>
+                <outlet property="imageActivityIndicator" destination="RIP-ZG-XbC" id="THK-G5-pvA"/>
+                <outlet property="thumbnailImageView" destination="ZEW-wx-RAd" id="eTW-fu-9z0"/>
+                <outlet property="titleLabel" destination="oXM-pF-fRy" id="0XM-0I-tFe"/>
+            </connections>
+            <point key="canvasLocation" x="48" y="71.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="NoThumbnail" width="70" height="70"/>
+    </resources>
+</document>

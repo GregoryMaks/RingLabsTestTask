@@ -25,18 +25,6 @@ class ApplicationCoordinator {
         let redditFlowCoordinator = RedditFlowCoordinator(window: window, networkService: networkService)
         redditFlowCoordinator.start()
         self.redditFlowCoordinator = redditFlowCoordinator
-        
-        // TEST
-        let reddit = RedditService(networkService: networkService)
-        reddit.requestTopPosts { result in
-            result.analysis(ifValue: { response in
-                print("Reddit success")
-                print("Children: \(response.models.count)")
-                print("Paging: \(response.pagingMarker)")
-            }, ifError: { error in
-                print("Reddit error: \(error)")
-            })
-        }
     }
     
 }
