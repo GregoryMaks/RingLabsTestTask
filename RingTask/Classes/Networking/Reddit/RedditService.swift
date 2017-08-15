@@ -40,10 +40,13 @@ class RedditService {
         self.queue = queue
     }
     
-    func requestTopPosts(completion: @escaping (Result<RedditListingResponse<RedditPostServerModel>, RedditError>)
-        -> Void)
+    func requestTopPosts(pagingMarker: RedditPagingMarker?,
+                         completion: @escaping (Result<RedditListingResponse<RedditPostServerModel>, RedditError>) -> Void)
     {
-        let request = URLRequest(url: Constants.topPostsAbsoluteURL)
+        let query = pagingMarker.flatMap { "after=\($0.after)" } ?? ""
+        let url = Constants.topPostsAbsoluteURL.urlWith(query: query)!
+        
+        let request = URLRequest(url: url)
         networkService.perform(request: request) { [weak self] result in
             guard let strongSelf = self else { return }
             strongSelf.queue.async {
