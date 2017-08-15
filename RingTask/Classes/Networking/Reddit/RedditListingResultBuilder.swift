@@ -43,15 +43,9 @@ class RedditListingResponseBuilder<ServerModel: RawDataInitializable> {
         return try children.map { try ServerModel(rawData: $0) }
     }
     
-    private func pagingMarker(from dataNode: [String: Any]) throws -> RedditListingResponse<ServerModel>.PagingMarker? {
+    private func pagingMarker(from dataNode: [String: Any]) throws -> RedditPagingMarker? {
         let after = try dataNode.validatedOptionalValue(forKey: "after") as String?
-        let before = try dataNode.validatedOptionalValue(forKey: "before") as String?
-        
-        if after != nil || before != nil {
-            return .init(before: before ?? "", after: after ?? "")
-        }
-        
-        return nil
+        return after.flatMap { .init(after: $0) }
     }
     
 }

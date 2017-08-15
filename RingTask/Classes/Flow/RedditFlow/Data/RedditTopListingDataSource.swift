@@ -28,7 +28,7 @@ class RedditTopListingDataSource {
     
     private let redditService: RedditService
     private var isLoading = false
-    private var pagingMarker: RedditListingResponse<RedditPostServerModel>.PagingMarker?
+    private var pagingMarker: RedditPagingMarker?
     
     // MARK: - Public properties
     
@@ -57,7 +57,10 @@ class RedditTopListingDataSource {
     private func loadDataChunk(loadingType: LoadingType) {
         guard !isLoading else { return }
         
-        redditService.requestTopPosts { [weak self] result in
+        let pagingMarker: RedditPagingMarker? = (loadingType == .loadMore) ? self.pagingMarker : nil
+        
+        isLoading = true
+        redditService.requestTopPosts(pagingMarker: pagingMarker) { [weak self] result in
             result.analysis(ifValue:
                 { response in
                     guard let strongSelf = self else { return }
