@@ -64,7 +64,7 @@ extension RedditFlowCoordinator: RedditTopListingViewModelCoordinatorDelegate {
         
         let viewController = SFSafariViewController(url: url)
         viewController.delegate = self
-        navigationController.pushViewController(viewController, animated: true)
+        navigationController.present(viewController, animated: true, completion: nil)
         
         safariViewController = viewController
     }
