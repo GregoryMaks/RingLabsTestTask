@@ -15,6 +15,8 @@ class RedditTopListingViewController: UITableViewController {
     
     fileprivate var viewModel: RedditTopListingViewModel!
     
+    fileprivate var fullScreenLoadingIndicator: UIAlertController?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -32,7 +34,10 @@ class RedditTopListingViewController: UITableViewController {
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         
-        
+        let longPressGesture:UILongPressGestureRecognizer =
+            UILongPressGestureRecognizer(target: self, action: #selector(tableViewLongPress))
+        longPressGesture.minimumPressDuration = 1.0
+        self.tableView.addGestureRecognizer(longPressGesture)
         
         viewModel.dataSource.loadData()
     }
@@ -50,6 +55,94 @@ class RedditTopListingViewController: UITableViewController {
         viewModel.dataSource.loadData()
     }
     
+    @objc func tableViewLongPress(_ sender: UILongPressGestureRecognizer) {
+        let location = sender.location(in: tableView)
+        guard let indexPath = tableView.indexPathForRow(at: location),
+              sender.state == .began else
+        {
+            return
+        }
+        
+        let model = viewModel.dataSource.models[indexPath.row]
+        openContextMenu(for: model)
+    }
+    
+    
+    // MARK: - Private methods
+    
+    private func openContextMenu(for itemModel: RedditPostServerModel) {
+        let alert = UIAlertController(title: "Choose your Action",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Save attached image to gallery", style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.showFullScreenLoadingIndicator()
+            strongSelf.viewModel.saveImageToGallery(for: itemModel) { result in
+                strongSelf.hideFullScreenLoadingIndicator(animated: false) {
+                    
+                    result.map(ifSuccess: { strongSelf.showFullscreenMessage("Your image was saved", duration: 2.0) },
+                               ifFailure: strongSelf.handleViewModelError)
+                    
+                }
+            }
+        })
+        alert.addAction(UIAlertAction(title: "Open link", style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.viewModel
+                .openLink(for: itemModel)
+                .mapError(strongSelf.handleViewModelError)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+
+    // MARK: - Loading indicators
+    
+    private func showFullScreenLoadingIndicator(completion: (() -> Void)? = nil) {
+        if let fullScreenLoadingIndicator = fullScreenLoadingIndicator {
+            fullScreenLoadingIndicator.dismiss(animated: false, completion: nil)
+        }
+        
+        let indicator = UIAlertController(title: nil,
+                                          message: "Processing...",
+                                          preferredStyle: .alert)
+        present(indicator, animated: true, completion: completion)
+        
+        fullScreenLoadingIndicator = indicator
+    }
+    
+    private func hideFullScreenLoadingIndicator(animated: Bool = true, completion: (() -> Void)? = nil) {
+        guard let fullScreenLoadingIndicator = fullScreenLoadingIndicator else {
+            completion?()
+            return
+        }
+        
+        fullScreenLoadingIndicator.dismiss(animated: animated, completion: completion)
+    }
+    
+    private func showFullscreenMessage(_ message: String, duration: TimeInterval, completion: (() -> Void)? = nil) {
+        let indicator = UIAlertController(title: nil,
+                                          message: message,
+                                          preferredStyle: .alert)
+        present(indicator, animated: true, completion: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
+            indicator.dismiss(animated: true, completion: completion)
+        }
+    }
+    
+    // MARK: - Error handlers
+    
+    fileprivate func handleViewModelError(_ error: RedditTopListingViewModel.Error) {
+        let alert = UIAlertController(title: "Error",
+                                      message: error.rawValue,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 
@@ -110,7 +203,10 @@ extension RedditTopListingViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.userDidSelectItem(atIndex: indexPath.row)
+        let itemModel = viewModel.dataSource.models[indexPath.row]
+        viewModel
+            .openLink(for: itemModel)
+            .mapError(handleViewModelError)
     }
 }
 
@@ -129,7 +225,7 @@ extension RedditTopListingViewController: RedditTopListingDataSourceDelegate {
         
         let alert = UIAlertController(title: "Error",
                                       message: error.localizedDescription,
-                                      preferredStyle: UIAlertControllerStyle.alert)
+                                      preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }

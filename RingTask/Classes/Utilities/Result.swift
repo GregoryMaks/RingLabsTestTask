@@ -26,7 +26,15 @@ func liftError<Value, Error>(_ error: Error) -> Result<Value, Error> {
 }
 
 
-enum Result<TValue, TError: Swift.Error> {
+/* TODO
+ 
+ Some Issues discovered
+ 
+ - TError == NSError, which leads to issue with inability to do this
+ 
+ */
+
+enum Result<TValue, TError> {
     
     case success(TValue)
     case failure(TError)
@@ -59,14 +67,14 @@ enum Result<TValue, TError: Swift.Error> {
         self = value.map(Result.success) ?? .failure(error())
     }
     
-    init(_ throwingExpression: () throws -> TValue, errorConverter: (Error) -> TError) {
-        do {
-            let value = try throwingExpression()
-            self = .success(value)
-        } catch {
-            self = .failure(errorConverter(error))
-        }
-    }
+//    init(_ throwingExpression: () throws -> TValue, errorConverter: (Error) -> TError) {
+//        do {
+//            let value = try throwingExpression()
+//            self = .success(value)
+//        } catch {
+//            self = .failure(errorConverter(error))
+//        }
+//    }
     
     // MARK: - Public methods
     
@@ -79,15 +87,17 @@ enum Result<TValue, TError: Swift.Error> {
     
     // MARK: Raw value related
     
-    func map<T, E>(ifSuccess: @escaping (TValue) -> T, ifFailure: @escaping (TError) -> E) -> Result<T, E> {
+    @discardableResult func map<T, E>(ifSuccess: @escaping (TValue) -> T, ifFailure: @escaping (TError) -> E)
+        -> Result<T, E>
+    {
         return self.flatMap(ifSuccess: ifSuccess • liftValue, ifFailure: ifFailure • liftError)
     }
     
-    func mapValue<T>(_ transform: @escaping (TValue) -> T) -> Result<T, TError> {
+    @discardableResult func mapValue<T>(_ transform: @escaping (TValue) -> T) -> Result<T, TError> {
         return self.map(ifSuccess: transform, ifFailure: identity)
     }
     
-    func mapError<E>(_ transform: @escaping (TError) -> E) -> Result<TValue, E> {
+    @discardableResult func mapError<E>(_ transform: @escaping (TError) -> E) -> Result<TValue, E> {
         return self.map(ifSuccess: identity, ifFailure: transform)
     }
     
