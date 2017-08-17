@@ -16,6 +16,7 @@ struct RedditPostServerModel: RawDataInitializable {
     let createdAt: Date
     let commentsCount: Int
     let thumbnailUrl: URL?
+    let imageUrl: URL?
     let url: URL?
     
     /// - Throws: ParsingError
@@ -34,6 +35,18 @@ struct RedditPostServerModel: RawDataInitializable {
         }
         
         url = try dataNode.validatedOptionalValue(forKey: "url")
+        
+        if let previewNode: [String: Any] = try dataNode.validatedOptionalValue(forKey: "preview"),
+            let imagesNodes: [[String: Any]] = try previewNode.validatedOptionalValue(forKey: "images"),
+            let imageNode = imagesNodes.first,
+            let sourceNode: [String: Any] = try imageNode.validatedOptionalValue(forKey: "source"),
+            let sourceUrl: URL = try sourceNode.validatedOptionalValue(forKey: "url")
+        {
+            imageUrl = sourceUrl
+        }
+        else {
+            imageUrl = nil
+        }
     }
     
 }
