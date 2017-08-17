@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import SafariServices
 
 
-class RedditFlowCoordinator {
+class RedditFlowCoordinator: NSObject {
     
     let window: UIWindow
     
-    private let networkService: NetworkServiceProtocol
-    private let imageLoadingService: ImageLoadingServiceProtocol
-    private var listViewController: RedditTopListingViewController?
+    fileprivate let networkService: NetworkServiceProtocol
+    fileprivate let imageLoadingService: ImageLoadingServiceProtocol
+    
+    fileprivate var navigationController: UINavigationController?
+    fileprivate var listViewController: RedditTopListingViewController?
+    fileprivate var safariViewController: SFSafariViewController?
     
     init(window: UIWindow, networkService: NetworkServiceProtocol, imageLoadingService: ImageLoadingServiceProtocol) {
         self.window = window
@@ -40,7 +44,9 @@ class RedditFlowCoordinator {
         viewModel.coordinatorDelegate = self
         viewController.bind(viewModel: viewModel)
         
+        navigationController = navController
         listViewController = viewController
+        
         window.rootViewController = navController
     }
     
@@ -51,7 +57,27 @@ class RedditFlowCoordinator {
 
 extension RedditFlowCoordinator: RedditTopListingViewModelCoordinatorDelegate {
     
-    // TODO
+    func viewModel(_ viewModel: RedditTopListingViewModel, openLinkAt url: URL) {
+        guard let navigationController = navigationController else {
+            return
+        }
+        
+        let viewController = SFSafariViewController(url: url)
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: true)
+        
+        safariViewController = viewController
+    }
     
 }
 
+
+// MARK: - SFSafariViewControllerDelegate
+
+extension RedditFlowCoordinator: SFSafariViewControllerDelegate {
+
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        safariViewController?.dismiss(animated: true)
+    }
+    
+}

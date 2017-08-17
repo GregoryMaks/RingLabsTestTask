@@ -59,16 +59,20 @@ class RedditTopListingCell: UITableViewCell, NibLoadableView, Reusable {
         imageActivityIndicator.startAnimating()
         
         imageLoadingDataTask = imageLoadingService.loadImage(for: imageUrl) { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             result.analysis(ifValue:
                 { image in
-                    self?.thumbnailImageView.image = image
-                    self?.imageActivityIndicator.stopAnimating()
+                    strongSelf.thumbnailImageView.image = image
+                    strongSelf.imageActivityIndicator.stopAnimating()
                 }, ifError:
                 { _ -> Void in
-                    self?.thumbnailImageView.image = Constants.noThumbnailImage()
-                    self?.failedToLoadImageOnce = true
+                    strongSelf.thumbnailImageView.image = Constants.noThumbnailImage()
+                    strongSelf.failedToLoadImageOnce = true
                 }
             )
+            
+            strongSelf.imageActivityIndicator.stopAnimating()
         }
     }
     
