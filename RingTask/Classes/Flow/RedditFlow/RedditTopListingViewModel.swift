@@ -11,7 +11,7 @@ import Foundation
 
 protocol RedditTopListingViewModelCoordinatorDelegate: class {
     
-    // TODO
+    func viewModel(_ viewModel: RedditTopListingViewModel, openLinkAt url: URL)
     
 }
 
@@ -28,6 +28,17 @@ class RedditTopListingViewModel {
     init(networkService: NetworkServiceProtocol, imageLoadingService: ImageLoadingServiceProtocol) {
         dataSource = RedditTopListingDataSource(networkService: networkService)
         self.imageLoadingService = imageLoadingService
+    }
+    
+    // MARK: - Public
+    
+    func userDidSelectItem(atIndex index: Int) {
+        let itemModel = dataSource.models[index]
+        if let contentUrl = itemModel.url {
+            coordinatorDelegate?.viewModel(self, openLinkAt: contentUrl)
+        } else {
+            print("unable to open item url")
+        }
     }
     
 }

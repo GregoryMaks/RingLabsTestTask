@@ -109,8 +109,13 @@ extension RedditTopListingViewController {
         viewModel.dataSource.loadMoreData()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.userDidSelectItem(atIndex: indexPath.row)
+    }
 }
 
+
+// MARK: - RedditTopListingDataSourceDelegate
 
 extension RedditTopListingViewController: RedditTopListingDataSourceDelegate {
     

@@ -55,7 +55,6 @@ class RedditService {
                           .flatMap(ifSuccess: strongSelf.parseListingResult, ifFailure: liftError)
                 )
             }
-            
         }
     }
     
