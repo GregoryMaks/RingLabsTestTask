@@ -36,7 +36,6 @@ class RedditTopListingViewController: UITableViewController {
         
         let longPressGesture:UILongPressGestureRecognizer =
             UILongPressGestureRecognizer(target: self, action: #selector(tableViewLongPress))
-        longPressGesture.minimumPressDuration = 1.0
         self.tableView.addGestureRecognizer(longPressGesture)
         
         viewModel.dataSource.loadData()
