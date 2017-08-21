@@ -72,7 +72,7 @@
 		E682D45F1F387A7B00767C0C /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		E682D4621F387D4300767C0C /* RedditFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFlowCoordinator.swift; sourceTree = "<group>"; };
 		E682D4641F387D7400767C0C /* RedditTopListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditTopListingViewController.swift; sourceTree = "<group>"; };
-		E6D40AC41F360EDA00371C82 /* RingTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RingTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D40AC41F360EDA00371C82 /* Reddit Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reddit Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D40AC71F360EDA00371C82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6D40ACC1F360EDA00371C82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E6D40ACE1F360EDA00371C82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 		E6D40AC51F360EDA00371C82 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E6D40AC41F360EDA00371C82 /* RingTask.app */,
+				E6D40AC41F360EDA00371C82 /* Reddit Viewer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -261,7 +261,7 @@
 			);
 			name = RingTask;
 			productName = RingTask;
-			productReference = E6D40AC41F360EDA00371C82 /* RingTask.app */;
+			productReference = E6D40AC41F360EDA00371C82 /* Reddit Viewer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -478,7 +478,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.RingTask;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Reddit Viewer";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -493,7 +493,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.RingTask;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Reddit Viewer";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
