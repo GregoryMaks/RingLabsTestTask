@@ -19,10 +19,14 @@ protocol RedditTopListingViewModelCoordinatorDelegate: class {
 
 class RedditTopListingViewModel {
     
-    enum Error: String, Swift.Error {
+    enum Error: String, Swift.Error, Descriptable {
         case unableToOpenPostUrl = "Unable to open post link"
         case noImageAttached = "No image attached"
         case failedToSaveImage = "Failed to save image, probably wrong format"
+        
+        var stringDescription: String {
+            return self.rawValue
+        }
     }
     
     let imageLoadingService: ImageLoadingServiceProtocol

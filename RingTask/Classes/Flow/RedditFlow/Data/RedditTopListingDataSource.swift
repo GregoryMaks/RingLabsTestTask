@@ -61,28 +61,25 @@ class RedditTopListingDataSource {
         
         isLoading = true
         redditService.requestTopPosts(pagingMarker: pagingMarker) { [weak self] result in
-            result.analysis(ifValue:
-                { response in
-                    guard let strongSelf = self else { return }
-                    
-                    strongSelf.modifyModels(withNewData: response.models, append: (loadingType == .loadMore))
-                    strongSelf.pagingMarker = response.pagingMarker
-                    
-                    strongSelf.isLoading = false
-                    strongSelf.delegate?.dataSourceDidFinishLoadingData(strongSelf)
-                }, ifError:
-                { error in
-                    guard let strongSelf = self else { return }
-                    
-                    strongSelf.isLoading = false
-                    strongSelf.delegate?.dataSource(strongSelf, didFinishWithError: error)
-                }
-            )
+            guard let `self` = self else { return }
+            
+            switch result {
+            case .success(let response):
+                self.updateModels(withModels: response.models, shouldAppend: (loadingType == .loadMore))
+                self.pagingMarker = response.pagingMarker
+                
+                self.isLoading = false
+                self.delegate?.dataSourceDidFinishLoadingData(self)
+                
+            case .failure(let error):
+                self.isLoading = false
+                self.delegate?.dataSource(self, didFinishWithError: error)
+            }
         }
     }
     
-    private func modifyModels(withNewData newModels: [RedditPostServerModel], append: Bool) {
-        models = append ? (models + newModels) : newModels
+    private func updateModels(withModels newModels: [RedditPostServerModel], shouldAppend: Bool) {
+        models = shouldAppend ? (models + newModels) : newModels
     }
     
 }

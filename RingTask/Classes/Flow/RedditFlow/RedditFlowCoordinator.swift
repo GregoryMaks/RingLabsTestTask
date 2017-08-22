@@ -10,6 +10,7 @@ import UIKit
 import SafariServices
 
 
+// - Note: inheritance from NSObject required to conform to SFSafariViewControllerDelegate
 class RedditFlowCoordinator: NSObject {
     
     let window: UIWindow
@@ -30,13 +31,11 @@ class RedditFlowCoordinator: NSObject {
     func start() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         guard let navController = storyboard.instantiateInitialViewController() as? UINavigationController else {
-            print("Error, root navigation not found")
-            return
+            fatalError("Error, root navigation not found")
         }
         
         guard let viewController = navController.viewControllers.first as? RedditTopListingViewController else {
-            print("Root view controller not found")
-            return
+            fatalError("Root view controller not found")
         }
         
         let viewModel = RedditTopListingViewModel(networkService: networkService,

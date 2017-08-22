@@ -27,8 +27,7 @@ struct RedditPostServerModel: RawDataInitializable {
         
         title = try dataNode.validatedValue(forKey: "title")
         author = try dataNode.validatedValue(forKey: "author")
-        createdAt = try dataNode.validatedDate(forKey: "created",
-                                               converter: { Date.init(timeIntervalSince1970:TimeInterval($0)) } )
+        createdAt = try dataNode.validatedDate(forKey: "created", converter: Date.init(timeIntervalSince1970:))
         commentsCount = try dataNode.validatedValue(forKey: "num_comments")
         thumbnailUrl = try dataNode.validatedOptionalValue(forKey: "thumbnail").flatMap {
             ($0 == "default") ? nil : URL(string: $0)

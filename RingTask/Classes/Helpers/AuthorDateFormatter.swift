@@ -15,7 +15,7 @@ class AuthorDateFormatter {
         return Calendar(identifier: Calendar.Identifier.gregorian)
     }()
     
-    func authorDateString(forAuthor author: String, date: Date) -> String {
+    func stringValue(forAuthor author: String, date: Date) -> String {
         return "by \(author) " + timeDifferenceString(from: date)
     }
     

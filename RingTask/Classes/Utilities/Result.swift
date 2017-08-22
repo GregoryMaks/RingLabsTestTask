@@ -26,14 +26,6 @@ func liftError<Value, Error>(_ error: Error) -> Result<Value, Error> {
 }
 
 
-/* TODO
- 
- Some Issues discovered
- 
- - TError == NSError, which leads to issue with inability to do this
- 
- */
-
 enum Result<TValue, TError> {
     
     case success(TValue)
@@ -66,15 +58,6 @@ enum Result<TValue, TError> {
     init(value: TValue?, error: @autoclosure () -> TError) {
         self = value.map(Result.success) ?? .failure(error())
     }
-    
-//    init(_ throwingExpression: () throws -> TValue, errorConverter: (Error) -> TError) {
-//        do {
-//            let value = try throwingExpression()
-//            self = .success(value)
-//        } catch {
-//            self = .failure(errorConverter(error))
-//        }
-//    }
     
     // MARK: - Public methods
     
@@ -114,4 +97,5 @@ enum Result<TValue, TError> {
     func flatMapError<E>(transform: @escaping (TError) -> Result<TValue, E>) -> Result<TValue, E> {
         return self.flatMap(ifSuccess: liftValue, ifFailure: transform)
     }
+    
 }

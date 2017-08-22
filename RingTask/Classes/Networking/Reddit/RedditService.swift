@@ -9,10 +9,21 @@
 import Foundation
 
 
-enum RedditError: Error {
+enum RedditError: Error, Descriptable {
     case networkError(error: NetworkError)
     case serverError(statusCode: Int)
     case parsingError(error: ParsingError)
+    
+    var stringDescription: String {
+        switch self {
+        case .networkError(let networkError):
+            return "Network error: \(networkError.stringDescription)"
+        case .serverError(let statusCode):
+            return "Server error \(statusCode)"
+        case .parsingError(let parsingError):
+            return "Parsing error: \(parsingError.stringDescription)"
+        }
+    }
 }
 
 
@@ -48,11 +59,11 @@ class RedditService {
         
         let request = URLRequest(url: url)
         networkService.perform(request: request) { [weak self] result in
-            guard let strongSelf = self else { return }
-            strongSelf.queue.async {
+            guard let `self` = self else { return }
+            self.queue.async {
                 completion(
-                    result.flatMap(ifSuccess: strongSelf.verifyServerResponse, ifFailure: strongSelf.networkErrorToResult)
-                          .flatMap(ifSuccess: strongSelf.parseListingResult, ifFailure: liftError)
+                    result.flatMap(ifSuccess: self.verifyServerResponse, ifFailure: self.networkErrorToResult)
+                          .flatMap(ifSuccess: self.parseListingResult, ifFailure: liftError)
                 )
             }
         }

@@ -11,8 +11,6 @@ import Foundation
 
 extension Dictionary where Key: ExpressibleByStringLiteral {
     
-    // TODO: make this more functional?
-    
     // MARK: - Generic types
     
     func validatedValue<T>(forKey key: Key) throws -> T {
@@ -39,9 +37,9 @@ extension Dictionary where Key: ExpressibleByStringLiteral {
     
     // MARK: - Concrete types
     
-    func validatedDate(forKey key: Key, converter: (Int) -> Date) throws -> Date {
-        let dateInt: Int = try validatedValue(forKey: key)
-        return Date(timeIntervalSince1970: TimeInterval(dateInt))
+    func validatedDate(forKey key: Key, converter: (TimeInterval) -> Date) throws -> Date {
+        let rawDateValue: Double = try validatedValue(forKey: key)
+        return converter(TimeInterval(rawDateValue))
     }
 
     func validatedValue(forKey key: Key) throws -> URL {
