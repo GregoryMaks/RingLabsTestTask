@@ -45,11 +45,11 @@ class ImageLoadingService: ImageLoadingServiceProtocol {
         -> URLSessionDataTask
     {
         return networkService.perform(request: URLRequest(url: url)) { [weak self] result in
-            guard let strongSelf = self else { return }
-            strongSelf.queue.async {
+            guard let `self` = self else { return }
+            self.queue.async {
                 completion(
-                    result.flatMap(ifSuccess: strongSelf.verifyServerResponse, ifFailure: strongSelf.networkErrorToResult)
-                          .flatMap(ifSuccess: strongSelf.createImageFromData, ifFailure: liftError)
+                    result.flatMap(ifSuccess: self.verifyServerResponse, ifFailure: self.networkErrorToResult)
+                          .flatMap(ifSuccess: self.createImageFromData, ifFailure: liftError)
                 )
             }
         }

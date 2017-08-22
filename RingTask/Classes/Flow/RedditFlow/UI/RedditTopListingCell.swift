@@ -59,20 +59,17 @@ class RedditTopListingCell: UITableViewCell, NibLoadableView, Reusable {
         imageActivityIndicator.startAnimating()
         
         imageLoadingDataTask = imageLoadingService.loadImage(for: imageUrl) { [weak self] result in
-            guard let strongSelf = self else { return }
+            guard let `self` = self else { return }
             
-            result.analysis(ifValue:
-                { image in
-                    strongSelf.thumbnailImageView.image = image
-                    strongSelf.imageActivityIndicator.stopAnimating()
-                }, ifError:
-                { _ -> Void in
-                    strongSelf.thumbnailImageView.image = Constants.noThumbnailImage()
-                    strongSelf.failedToLoadImageOnce = true
-                }
-            )
+            switch result {
+            case .success(let image):
+                self.thumbnailImageView.image = image
+            case .failure(_):
+                self.thumbnailImageView.image = Constants.noThumbnailImage()
+                self.failedToLoadImageOnce = true
+            }
             
-            strongSelf.imageActivityIndicator.stopAnimating()
+            self.imageActivityIndicator.stopAnimating()
         }
     }
     
@@ -100,7 +97,7 @@ class RedditTopListingCell: UITableViewCell, NibLoadableView, Reusable {
         }
         
         titleLabel.text = model.title
-        authorDateLabel.text = AuthorDateFormatter().authorDateString(forAuthor: model.author, date: model.createdAt)
+        authorDateLabel.text = AuthorDateFormatter().stringValue(forAuthor: model.author, date: model.createdAt)
         commentsLabel.text = CommentFormatter().commentString(fromCommentCount: model.commentsCount)
         
         if model.thumbnailUrl == nil {

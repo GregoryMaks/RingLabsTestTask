@@ -11,6 +11,13 @@ import UIKit
 
 class RedditTopListingViewController: UITableViewController {
     
+    private struct Constants {
+        // These are not magic numbers, used by TV to approximate scrolling
+        static let estimatedRowHeight: CGFloat = 87.0
+        static let estimatedSectionFooterHeight: CGFloat = 45.0
+    }
+
+    
     // MARK: - Private properties
     
     fileprivate var viewModel: RedditTopListingViewModel!
@@ -26,10 +33,10 @@ class RedditTopListingViewController: UITableViewController {
         tableView.register(headerFooterView: LoadMoreFooterView.self)
         
         tableView.rowHeight = UITableViewAutomaticDimension;
-        tableView.estimatedRowHeight = 87.0 // not a magic number, used by TV to approximate
+        tableView.estimatedRowHeight = Constants.estimatedRowHeight
         
         tableView.sectionFooterHeight = UITableViewAutomaticDimension;
-        tableView.estimatedSectionFooterHeight = 45.0   // not a magic number, used by TV to approximate
+        tableView.estimatedSectionFooterHeight = Constants.estimatedSectionFooterHeight
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
@@ -74,24 +81,22 @@ class RedditTopListingViewController: UITableViewController {
                                       message: nil,
                                       preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Save attached image to gallery", style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
+            guard let `self` = self else { return }
             
-            strongSelf.showFullScreenLoadingIndicator()
-            strongSelf.viewModel.saveImageToGallery(for: itemModel) { result in
-                strongSelf.hideFullScreenLoadingIndicator(animated: false) {
-                    
-                    result.map(ifSuccess: { strongSelf.showFullscreenMessage("Your image was saved", duration: 2.0) },
-                               ifFailure: strongSelf.handleViewModelError)
-                    
+            self.showFullScreenLoadingIndicator()
+            self.viewModel.saveImageToGallery(for: itemModel) { result in
+                self.hideFullScreenLoadingIndicator(animated: false) {
+                    result.map(ifSuccess: { self.showFullscreenMessage("Your image was saved", duration: 2.0) },
+                               ifFailure: self.handleViewModelError)
                 }
             }
         })
         alert.addAction(UIAlertAction(title: "Open link", style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
+            guard let `self` = self else { return }
             
-            strongSelf.viewModel
+            self.viewModel
                 .openLink(for: itemModel)
-                .mapError(strongSelf.handleViewModelError)
+                .mapError(self.handleViewModelError)
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -136,8 +141,12 @@ class RedditTopListingViewController: UITableViewController {
     // MARK: - Error handlers
     
     fileprivate func handleViewModelError(_ error: RedditTopListingViewModel.Error) {
+        showErrorAlert(message: error.stringDescription)
+    }
+    
+    fileprivate func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Error",
-                                      message: error.rawValue,
+                                      message: message,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
@@ -154,11 +163,7 @@ extension RedditTopListingViewController {
         cell.model = viewModel.dataSource.models[indexPath.row]
         return cell
     }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.dataSource.models.count
     }
@@ -221,12 +226,7 @@ extension RedditTopListingViewController: RedditTopListingDataSourceDelegate {
     
     func dataSource(_ dataSource: RedditTopListingDataSource, didFinishWithError error: RedditError) {
         refreshControl?.endRefreshing()
-        
-        let alert = UIAlertController(title: "Error",
-                                      message: error.localizedDescription,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+        showErrorAlert(message: error.stringDescription)
     }
     
 }

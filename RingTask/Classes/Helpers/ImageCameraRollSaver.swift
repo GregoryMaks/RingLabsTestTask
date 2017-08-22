@@ -17,8 +17,6 @@ class ImageCameraRollSaver: NSObject {
     
     func saveImageToCameraRoll(image: UIImage, completion: @escaping CompletionHandler) {
         completionBlock = completion
-        
-        // Note: retains self
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
