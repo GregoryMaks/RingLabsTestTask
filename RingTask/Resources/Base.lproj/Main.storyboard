@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RFa-hM-rBF">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Reddit Top-->
+        <scene sceneID="cGK-Cg-uv7">
+            <objects>
+                <tableViewController id="pca-gT-dLJ" customClass="RedditTopListingViewController" customModule="RingTask" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wuL-fc-Ae8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="pca-gT-dLJ" id="lxa-se-P5W"/>
+                            <outlet property="delegate" destination="pca-gT-dLJ" id="3ME-9u-N9J"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Reddit Top" id="hCb-zd-xc9"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gdl-br-1wD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="529" y="131"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dzW-cH-v2s">
+            <objects>
+                <navigationController id="RFa-hM-rBF" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wyu-uF-UEo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="pca-gT-dLJ" kind="relationship" relationship="rootViewController" id="NQ7-oJ-5UO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2es-k1-f23" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-334" y="131"/>
+        </scene>
+    </scenes>
+</document>
