@@ -13,19 +13,21 @@ import SafariServices
 // - Note: inheritance from NSObject required to conform to SFSafariViewControllerDelegate
 class RedditFlowCoordinator: NSObject {
     
-    let window: UIWindow
+    typealias SpecificDependencyContainer = DependencyContainer<(NetworkServiceProtocol, ImageLoadingServiceProtocol)>
     
-    fileprivate let networkService: NetworkServiceProtocol
-    fileprivate let imageLoadingService: ImageLoadingServiceProtocol
+    let window: UIWindow
+    let dependencyContainer: SpecificDependencyContainer
+    
+    fileprivate var networkService: NetworkServiceProtocol { return dependencyContainer.produce() }
+    fileprivate var imageLoadingService: ImageLoadingServiceProtocol { return dependencyContainer.produce() }
     
     fileprivate var navigationController: UINavigationController?
     fileprivate var listViewController: RedditTopListingViewController?
     fileprivate var safariViewController: SFSafariViewController?
     
-    init(window: UIWindow, networkService: NetworkServiceProtocol, imageLoadingService: ImageLoadingServiceProtocol) {
+    init(window: UIWindow, dependencyContainer: SpecificDependencyContainer) {
         self.window = window
-        self.networkService = networkService
-        self.imageLoadingService = imageLoadingService
+        self.dependencyContainer = dependencyContainer
     }
     
     func start() {

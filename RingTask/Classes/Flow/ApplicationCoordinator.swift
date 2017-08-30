@@ -10,7 +10,7 @@ import UIKit
 
 
 class ApplicationCoordinator {
-
+    
     let window: UIWindow
     
     private var redditFlowCoordinator: RedditFlowCoordinator?
@@ -24,11 +24,15 @@ class ApplicationCoordinator {
     }
     
     func start() {
-        let redditFlowCoordinator = RedditFlowCoordinator(window: window,
-                                                          networkService: networkService,
-                                                          imageLoadingService: imageLoadingService)
+        let container = dependencyContainerWith(
+        { self.networkService },
+        { self.imageLoadingService }
+        )
+        
+        let redditFlowCoordinator = RedditFlowCoordinator(window: window, dependencyContainer: container)
         redditFlowCoordinator.start()
         self.redditFlowCoordinator = redditFlowCoordinator
     }
     
 }
+
