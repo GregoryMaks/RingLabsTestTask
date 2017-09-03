@@ -24,9 +24,9 @@ class ApplicationCoordinator {
     }
     
     func start() {
-        let container = dependencyContainerWith(
-        { self.networkService },
-        { self.imageLoadingService }
+        let container = dependencyContainer(
+            { self.networkService },
+            { self.imageLoadingService }
         )
         
         let redditFlowCoordinator = RedditFlowCoordinator(window: window, dependencyContainer: container)

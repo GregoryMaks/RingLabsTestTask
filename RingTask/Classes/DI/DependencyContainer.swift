@@ -17,8 +17,8 @@ class DependencyContainer<T> {
     }
     
     private var nodes: [String: Any] = [:]
-    
-    func register<T>(_ instantiationBlock: @escaping () -> T) {
+
+    fileprivate func register<T>(_ instantiationBlock: @escaping () -> T) {
         let key = String(describing: T.self)
         let dependency = ObjectDependency(instantiationFunctor: instantiationBlock)
         nodes[key] = dependency
@@ -42,23 +42,24 @@ class DependencyContainer<T> {
     
 }
 
-func dependencyContainerWith<A>(_ aFunctor: @escaping () -> A) -> DependencyContainer<(A)> {
+func dependencyContainer<A>(_ aFunctor: @escaping () -> A) -> DependencyContainer<(A)> {
     let container = DependencyContainer<(A)>()
     container.register(aFunctor)
     return container
 }
 
-func dependencyContainerWith<A, B>(_ aFunctor: @escaping () -> A,
-                                   _ bFunctor: @escaping () -> B) -> DependencyContainer<(A, B)> {
+func dependencyContainer<A, B>(_ aFunctor: @escaping () -> A,
+                               _ bFunctor: @escaping () -> B) -> DependencyContainer<(A, B)> {
     let container = DependencyContainer<(A, B)>()
     container.register(aFunctor)
     container.register(bFunctor)
     return container
 }
 
-func dependencyContainerWith<A, B, C>(_ aFunctor: @escaping () -> A,
-                                      _ bFunctor: @escaping () -> B,
-                                      _ cFunctor: @escaping () -> C) -> DependencyContainer<(A, B, C)> {
+func dependencyContainer<A, B, C>(_ aFunctor: @escaping () -> A,
+                                  _ bFunctor: @escaping () -> B,
+                                  _ cFunctor: @escaping () -> C) -> DependencyContainer<(A, B, C)>
+{
     let container = DependencyContainer<(A, B, C)>()
     container.register(aFunctor)
     container.register(bFunctor)

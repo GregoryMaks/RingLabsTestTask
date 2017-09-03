@@ -13,7 +13,10 @@ import SafariServices
 // - Note: inheritance from NSObject required to conform to SFSafariViewControllerDelegate
 class RedditFlowCoordinator: NSObject {
     
-    typealias SpecificDependencyContainer = DependencyContainer<(NetworkServiceProtocol, ImageLoadingServiceProtocol)>
+    typealias SpecificDependencyContainer = DependencyContainer<(
+        NetworkServiceProtocol,
+        ImageLoadingServiceProtocol
+    )>
     
     let window: UIWindow
     let dependencyContainer: SpecificDependencyContainer
