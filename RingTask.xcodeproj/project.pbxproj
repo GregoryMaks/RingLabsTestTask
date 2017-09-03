@@ -31,6 +31,7 @@
 		93EB195F1F4C5D8800FAA8C0 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EB195B1F4C5D8800FAA8C0 /* URL+Extensions.swift */; };
 		93EB19611F4C94D300FAA8C0 /* RawDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EB19601F4C94D300FAA8C0 /* RawDataInitializable.swift */; };
 		93EB19631F4CAACE00FAA8C0 /* Descriptable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EB19621F4CAACE00FAA8C0 /* Descriptable.swift */; };
+		9A94B5EAD770D6213AA47B67 /* Pods_RingTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A826E37C9538F09918E7E26F /* Pods_RingTask.framework */; };
 		E61A51DB1F36444A00248D82 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A51DA1F36444A00248D82 /* NetworkService.swift */; };
 		E61A51DF1F365EE000248D82 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A51DE1F365EE000248D82 /* Result.swift */; };
 		E682D45D1F38640C00767C0C /* Dictionary+ServerModelValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E682D45C1F38640C00767C0C /* Dictionary+ServerModelValidation.swift */; };
@@ -44,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4263C3230DD734BD67178549 /* Pods-RingTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RingTask.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RingTask/Pods-RingTask.debug.xcconfig"; sourceTree = "<group>"; };
+		906342EB811696E2F79DECE4 /* Pods-RingTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RingTask.release.xcconfig"; path = "Pods/Target Support Files/Pods-RingTask/Pods-RingTask.release.xcconfig"; sourceTree = "<group>"; };
 		9327D3B11F3F704700DEADC6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9327D3B41F3F8AA000DEADC6 /* RedditPostServerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditPostServerModel.swift; sourceTree = "<group>"; };
 		9327D3B51F3F8AA000DEADC6 /* RedditService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditService.swift; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 		93EB195B1F4C5D8800FAA8C0 /* URL+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		93EB19601F4C94D300FAA8C0 /* RawDataInitializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawDataInitializable.swift; sourceTree = "<group>"; };
 		93EB19621F4CAACE00FAA8C0 /* Descriptable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Descriptable.swift; sourceTree = "<group>"; };
+		A826E37C9538F09918E7E26F /* Pods_RingTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RingTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61A51DA1F36444A00248D82 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E61A51DE1F365EE000248D82 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		E682D45C1F38640C00767C0C /* Dictionary+ServerModelValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+ServerModelValidation.swift"; sourceTree = "<group>"; };
@@ -87,12 +91,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A94B5EAD770D6213AA47B67 /* Pods_RingTask.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08EE6D6229BF3EC1AB32C4AF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4263C3230DD734BD67178549 /* Pods-RingTask.debug.xcconfig */,
+				906342EB811696E2F79DECE4 /* Pods-RingTask.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9327D3B31F3F8A6900DEADC6 /* Reddit */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +162,14 @@
 				933492C61F45B2C200E91444 /* ImageCameraRollSaver.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		95E7AE13BAB0410F55EAA7FB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A826E37C9538F09918E7E26F /* Pods_RingTask.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E60067E91F373B9C0078DAA5 /* Networking */ = {
@@ -218,6 +240,8 @@
 			children = (
 				E6D40AC61F360EDA00371C82 /* RingTask */,
 				E6D40AC51F360EDA00371C82 /* Products */,
+				08EE6D6229BF3EC1AB32C4AF /* Pods */,
+				95E7AE13BAB0410F55EAA7FB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,9 +286,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6D40AD61F360EDA00371C82 /* Build configuration list for PBXNativeTarget "RingTask" */;
 			buildPhases = (
+				ED5862468DF462862AE63E1C /* [CP] Check Pods Manifest.lock */,
 				E6D40AC01F360EDA00371C82 /* Sources */,
 				E6D40AC11F360EDA00371C82 /* Frameworks */,
 				E6D40AC21F360EDA00371C82 /* Resources */,
+				D9A4550E7C5B2F12C1E65101 /* [CP] Embed Pods Frameworks */,
+				4C210AD2648DC51D1783C45A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -322,6 +349,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4C210AD2648DC51D1783C45A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RingTask/Pods-RingTask-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D9A4550E7C5B2F12C1E65101 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RingTask/Pods-RingTask-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Dip/Dip.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RingTask/Pods-RingTask-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED5862468DF462862AE63E1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RingTask-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E6D40AC01F360EDA00371C82 /* Sources */ = {
@@ -483,6 +566,7 @@
 		};
 		E6D40AD71F360EDA00371C82 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4263C3230DD734BD67178549 /* Pods-RingTask.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8BV4H23WZY;
@@ -498,6 +582,7 @@
 		};
 		E6D40AD81F360EDA00371C82 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 906342EB811696E2F79DECE4 /* Pods-RingTask.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8BV4H23WZY;
