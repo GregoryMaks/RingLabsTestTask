@@ -32,10 +32,10 @@ class RedditTopListingViewController: UITableViewController {
         tableView.register(cell: RedditTopListingCell.self)
         tableView.register(headerFooterView: LoadMoreFooterView.self)
         
-        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.rowHeight = UITableView.automaticDimension;
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
         
-        tableView.sectionFooterHeight = UITableViewAutomaticDimension;
+        tableView.sectionFooterHeight = UITableView.automaticDimension;
         tableView.estimatedSectionFooterHeight = Constants.estimatedSectionFooterHeight
         
         refreshControl = UIRefreshControl()
@@ -86,8 +86,8 @@ class RedditTopListingViewController: UITableViewController {
             self.showFullScreenLoadingIndicator()
             self.viewModel.saveImageToGallery(for: itemModel) { result in
                 self.hideFullScreenLoadingIndicator(animated: false) {
-                    result.map(ifSuccess: { self.showFullscreenMessage("Your image was saved", duration: 2.0) },
-                               ifFailure: self.handleViewModelError)
+                    result.analyze(ifSuccess: { self.showFullscreenMessage("Your image was saved", duration: 2.0) },
+                                   ifFailure: self.handleViewModelError)
                 }
             }
         })
@@ -96,7 +96,7 @@ class RedditTopListingViewController: UITableViewController {
             
             self.viewModel
                 .openLink(for: itemModel)
-                .mapError(self.handleViewModelError)
+                .analyzeFailure(self.handleViewModelError)
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -210,7 +210,7 @@ extension RedditTopListingViewController {
         let itemModel = viewModel.dataSource.models[indexPath.row]
         viewModel
             .openLink(for: itemModel)
-            .mapError(handleViewModelError)
+            .analyzeFailure(handleViewModelError)
     }
 }
 

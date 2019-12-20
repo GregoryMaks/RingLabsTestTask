@@ -31,7 +31,7 @@
 		93EB19611F4C94D300FAA8C0 /* RawDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EB19601F4C94D300FAA8C0 /* RawDataInitializable.swift */; };
 		93EB19631F4CAACE00FAA8C0 /* Descriptable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EB19621F4CAACE00FAA8C0 /* Descriptable.swift */; };
 		E61A51DB1F36444A00248D82 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A51DA1F36444A00248D82 /* NetworkService.swift */; };
-		E61A51DF1F365EE000248D82 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A51DE1F365EE000248D82 /* Result.swift */; };
+		E61A51DF1F365EE000248D82 /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A51DE1F365EE000248D82 /* Result+Extensions.swift */; };
 		E682D45D1F38640C00767C0C /* Dictionary+ServerModelValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E682D45C1F38640C00767C0C /* Dictionary+ServerModelValidation.swift */; };
 		E682D4601F387A7B00767C0C /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E682D45F1F387A7B00767C0C /* ApplicationCoordinator.swift */; };
 		E682D4631F387D4300767C0C /* RedditFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E682D4621F387D4300767C0C /* RedditFlowCoordinator.swift */; };
@@ -67,7 +67,7 @@
 		93EB19601F4C94D300FAA8C0 /* RawDataInitializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawDataInitializable.swift; sourceTree = "<group>"; };
 		93EB19621F4CAACE00FAA8C0 /* Descriptable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Descriptable.swift; sourceTree = "<group>"; };
 		E61A51DA1F36444A00248D82 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		E61A51DE1F365EE000248D82 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		E61A51DE1F365EE000248D82 /* Result+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Extensions.swift"; sourceTree = "<group>"; };
 		E682D45C1F38640C00767C0C /* Dictionary+ServerModelValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+ServerModelValidation.swift"; sourceTree = "<group>"; };
 		E682D45F1F387A7B00767C0C /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		E682D4621F387D4300767C0C /* RedditFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				93EB19591F4C5D8800FAA8C0 /* NibLoadableView.swift */,
 				93EB195A1F4C5D8800FAA8C0 /* Reusable.swift */,
 				93EB195B1F4C5D8800FAA8C0 /* URL+Extensions.swift */,
-				E61A51DE1F365EE000248D82 /* Result.swift */,
+				E61A51DE1F365EE000248D82 /* Result+Extensions.swift */,
 				E6EAD4141F3738BF0007EC65 /* FunctionalComposition.swift */,
 				E682D45C1F38640C00767C0C /* Dictionary+ServerModelValidation.swift */,
 				93EB19621F4CAACE00FAA8C0 /* Descriptable.swift */,
@@ -271,7 +271,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Gregory M";
 				TargetAttributes = {
 					E6D40AC31F360EDA00371C82 = {
@@ -317,7 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E61A51DF1F365EE000248D82 /* Result.swift in Sources */,
+				E61A51DF1F365EE000248D82 /* Result+Extensions.swift in Sources */,
 				9327D3B71F3F8AA000DEADC6 /* RedditService.swift in Sources */,
 				E682D4651F387D7400767C0C /* RedditTopListingViewController.swift in Sources */,
 				93CF2EB41F423EFC00E90876 /* LoadMoreFooterView.swift in Sources */,
@@ -376,6 +376,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -383,6 +384,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -433,6 +435,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -440,6 +443,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -479,7 +483,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.RingTask;
 				PRODUCT_NAME = "Reddit Viewer";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -494,7 +498,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.RingTask;
 				PRODUCT_NAME = "Reddit Viewer";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

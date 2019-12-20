@@ -63,8 +63,8 @@ class RedditTopListingViewModel {
             case .success(let image):
                 ImageCameraRollSaver().saveImageToCameraRoll(image: image) { result in
                     completion(
-                        result.flatMap(ifSuccess: { .success() },
-                                       ifFailure: { _ in .failure(.failedToSaveImage) })
+                        result.flatMapBoth(ifSuccess: { .success(()) },
+                                           ifFailure: { _ in .failure(.failedToSaveImage) })
                     )
                 }
 
@@ -77,7 +77,7 @@ class RedditTopListingViewModel {
     func openLink(for itemModel: RedditPostServerModel) -> Result<Void, RedditTopListingViewModel.Error> {
         if let contentUrl = itemModel.url {
             coordinatorDelegate?.viewModel(self, openLinkAt: contentUrl)
-            return .success()
+            return .success(())
         } else {
             return .failure(.noImageAttached)
         }

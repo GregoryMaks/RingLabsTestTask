@@ -21,7 +21,7 @@ class ImageCameraRollSaver: NSObject {
     }
     
     @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        completionBlock?(error.flatMap { .failure($0) } ?? .success())
+        completionBlock?(error.flatMap { .failure($0) } ?? .success(()))
         completionBlock = nil
     }
 }

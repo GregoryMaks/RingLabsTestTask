@@ -62,8 +62,8 @@ class RedditService {
             guard let `self` = self else { return }
             self.queue.async {
                 completion(
-                    result.flatMap(ifSuccess: self.verifyServerResponse, ifFailure: self.networkErrorToResult)
-                          .flatMap(ifSuccess: self.parseListingResult, ifFailure: liftError)
+                    result.flatMapBoth(ifSuccess: self.verifyServerResponse, ifFailure: self.networkErrorToResult)
+                          .flatMapBoth(ifSuccess: self.parseListingResult, ifFailure: liftError)
                 )
             }
         }
